@@ -1,6 +1,6 @@
 import math
 
-def get_dict(x) -> dict:
+def criar_dicionario(x) -> dict:
     return {
         "x": x,
         "ln": math.log,
@@ -11,16 +11,16 @@ def get_dict(x) -> dict:
         "e": math.e
     } 
 
-def get_error(intervalo: list[float]) -> float: 
+def calcular_erro(intervalo: list[float]) -> float: 
     return (intervalo[1] - intervalo[0]) / 2 
 
-def get_resultado_da_funcao(funcao: str, x: float):
+def calcular_resultado_da_funcao(funcao: str, x: float):
     return eval(funcao, {"__builtins__": None}, get_dict(x))
 
-def get_midpoint(intervalo: list[float]) -> float:
+def calcular_ponto_medio(intervalo: list[float]) -> float:
     return (intervalo[0] + intervalo[1]) / 2
 
-def get_sinal(valor):
+def calcular_sinal(valor):
     if valor > 0:
         return "> 0"
     elif valor < 0:
@@ -30,14 +30,14 @@ def get_sinal(valor):
 
 def bissecao(funcao: str, intervalo: list[float], erro_maximo: float):
    
-    while get_error(intervalo) > erro_maximo:
+    while calcular_erro(intervalo) > erro_maximo:
         a = intervalo[0] 
         b = intervalo[1]
-        ponto_medio = get_midpoint(intervalo)
+        ponto_medio = calcular_ponto_medio(intervalo)
 
-        fa = get_resultado_da_funcao(funcao, a)
-        fm = get_resultado_da_funcao(funcao, ponto_medio)
-        fb = get_resultado_da_funcao(funcao, b)
+        fa = calcular_resultado_da_funcao(funcao, a)
+        fm = calcular_resultado_da_funcao(funcao, ponto_medio)
+        fb = calcular_resultado_da_funcao(funcao, b)
 
         print("\n")
         print(f"Consideremos os intervalos:")
@@ -54,14 +54,14 @@ def bissecao(funcao: str, intervalo: list[float], erro_maximo: float):
             print(f"Logo, x0 ∈ [{ponto_medio:.4f}; {b:.4f}]")
             intervalo[0] = ponto_medio
 
-        estimativa = get_midpoint(intervalo)
+        estimativa = calcular_ponto_medio(intervalo)
 
         print("Assim, uma nova estimativa é:")
         print(f"x0 ≈ {estimativa:.4f}")
-        print(f"|e| <= {get_error(intervalo):.4f}")
+        print(f"|e| <= {calcular_erro(intervalo):.4f}")
 
     print("\nErro máximo atingido.")
-    print(f"x0 ≈ {get_midpoint(intervalo):.4f}")
-    print(f"|e| <= {get_error(intervalo):.4f}")
+    print(f"x0 ≈ {calcular_ponto_medio(intervalo):.4f}")
+    print(f"|e| <= {calcular_erro(intervalo):.4f}")
     
-    return get_midpoint(intervalo), get_error(intervalo)
+    return calcular_ponto_medio(intervalo), calcular_erro(intervalo)
