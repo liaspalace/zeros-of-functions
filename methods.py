@@ -23,7 +23,16 @@ def get_resultado_da_funcao(funcao:str, x: float):
 def get_midpoint(intervalo: list[float]) -> float:
     return (intervalo[0] + intervalo[1]) / 2
 
+def get_sinal(valor):
+    if valor > 0:
+        return "> 0"
+    elif valor < 0:
+        return "< 0"
+    else:
+        return "= 0"
+
 def bissecao(funcao:str, intervalo: list[float], erro_maximo: float):
+    casas = get_error_length(erro_maximo)
     while get_error(intervalo) > erro_maximo:
         a = intervalo[0] # [-2;-1.5] e [-1,5;-1]
         b = intervalo[1]
@@ -33,23 +42,24 @@ def bissecao(funcao:str, intervalo: list[float], erro_maximo: float):
         fm = get_resultado_da_funcao(funcao, ponto_medio)
         fb = get_resultado_da_funcao(funcao, b)
 
+        print("\n")
         print(f"Consideremos os intervalos:")
         print(f"[{a:.4f}; {ponto_medio:.4f}] e [{ponto_medio:.4f}; {b:.4f}]")
-        print(f"f({a:.4f}) = {fa:.4f}")
-        print(f"f({ponto_medio:.4f}) = {fm:.4f}")
-        print(f"f({b:.4f}) = {fb:.4f}")
+        print(f"f({a:.4f}) ≈ {fa:.4f} ({get_sinal(fa)})")
+        print(f"f({ponto_medio:.4f}) ≈ {fm:.4f} ({get_sinal(fm)})")
+        print(f"f({b:.4f}) ≈ {fb:.4f} ({get_sinal(fb)})")
 
         if fa * fm < 0:
-            print(f"Logo, x0 E [{a:.4f}; {ponto_medio:.4f}]")
+            print(f"Logo, x0 ∈ [{a:.4f}; {ponto_medio:.4f}]")
             intervalo[1] = ponto_medio
             
         else:
-            print(f"Logo, x0 E [{ponto_medio:.4f}; {b:.4f}]")
+            print(f"Logo, x0 ∈ [{ponto_medio:.4f}; {b:.4f}]")
             intervalo[0] = ponto_medio
 
         estimativa = get_midpoint(intervalo)
 
-        print("Assim, uma nova estimava é:")
-        print(f"x0 pertence {estimativa}")
-        print(f"|e| <= {get_error(intervalo):.4f}")
+        print("Assim, uma nova estimativa é:")
+        print(f"x0 ≈ {estimativa:.{casas}f}")
+        print(f"|e| <= {get_error(intervalo):.{casas}f}")
     return get_midpoint(intervalo), get_error(intervalo)

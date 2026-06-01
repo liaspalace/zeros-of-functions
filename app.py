@@ -3,14 +3,13 @@ from tkinter import scrolledtext, messagebox
 import sys
 import methods
 
-# Esta classe pega qualquer print() do methods.py e joga na tela do Tkinter
 class RedirecionadorPrint:
     def __init__(self, widget_texto):
         self.widget_texto = widget_texto
 
     def write(self, texto):
         self.widget_texto.insert(tk.END, texto)
-        self.widget_texto.see(tk.END) # Rola a tela para baixo automaticamente
+        self.widget_texto.see(tk.END) 
 
     def flush(self):
         pass
@@ -25,7 +24,6 @@ def executar_calculo():
         text_saida.delete(1.0, tk.END)
         text_saida.insert(tk.END, "Calculando...\n\n")
         
-        # Chama a função original. Os prints vão aparecer na caixa de texto
         methods.bissecao(funcao_str, [a, b], erro_max)
         
     except Exception as e:
@@ -71,7 +69,6 @@ tk.Label(janela, text="Passo a passo:").pack(anchor="w")
 text_saida = scrolledtext.ScrolledText(janela, width=60, height=18, font=("Consolas", 10))
 text_saida.pack(fill="both", expand=True)
 
-# Ativa o redirecionamento dos prints para a caixa de texto
 sys.stdout = RedirecionadorPrint(text_saida)
 
 janela.mainloop()
