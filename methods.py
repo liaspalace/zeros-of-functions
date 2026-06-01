@@ -1,24 +1,21 @@
 import math
 
-def get_dict(x)-> dict:
-    return{
+def get_dict(x) -> dict:
+    return {
         "x": x,
-        "ln" : math.log,
+        "ln": math.log,
         "sen": math.sin,
         "cos": math.cos,
         "tan": math.tan,
         "pi": math.pi,
-        "e" : math.e
+        "e": math.e
     } 
 
-def get_error_length(erro: float) -> int:
-    return len(str(erro).split(".")[1]) 
-
 def get_error(intervalo: list[float]) -> float: 
-    return (intervalo[1] - intervalo[0])/2 #TODO: colocar casas decimais no print do resultado
+    return (intervalo[1] - intervalo[0]) / 2 
 
-def get_resultado_da_funcao(funcao:str, x: float):
-    return eval(funcao, get_dict(x))
+def get_resultado_da_funcao(funcao: str, x: float):
+    return eval(funcao, {"__builtins__": None}, get_dict(x))
 
 def get_midpoint(intervalo: list[float]) -> float:
     return (intervalo[0] + intervalo[1]) / 2
@@ -31,10 +28,10 @@ def get_sinal(valor):
     else:
         return "= 0"
 
-def bissecao(funcao:str, intervalo: list[float], erro_maximo: float):
-    casas = get_error_length(erro_maximo)
+def bissecao(funcao: str, intervalo: list[float], erro_maximo: float):
+   
     while get_error(intervalo) > erro_maximo:
-        a = intervalo[0] # [-2;-1.5] e [-1,5;-1]
+        a = intervalo[0] 
         b = intervalo[1]
         ponto_medio = get_midpoint(intervalo)
 
@@ -60,6 +57,11 @@ def bissecao(funcao:str, intervalo: list[float], erro_maximo: float):
         estimativa = get_midpoint(intervalo)
 
         print("Assim, uma nova estimativa é:")
-        print(f"x0 ≈ {estimativa:.{casas}f}")
-        print(f"|e| <= {get_error(intervalo):.{casas}f}")
+        print(f"x0 ≈ {estimativa:.4f}")
+        print(f"|e| <= {get_error(intervalo):.4f}")
+
+    print("\nErro máximo atingido.")
+    print(f"x0 ≈ {get_midpoint(intervalo):.4f}")
+    print(f"|e| <= {get_error(intervalo):.4f}")
+    
     return get_midpoint(intervalo), get_error(intervalo)
