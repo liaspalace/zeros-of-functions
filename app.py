@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import scrolledtext, messagebox
 import sys
 import methods
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Cores do Tema Olive & Beige unificado
 BG_APP = "#8A9A5B"       # Verde oliva
@@ -56,7 +58,28 @@ def executar_calculo():
         text_saida.delete(1.0, tk.END)
         text_saida.insert(tk.END, ">> INICIANDO CÁLCULOS...\n\n", "bloco")
         
-        methods.bissecao(funcao_str, [a, b], erro_max)
+        raiz, erro = methods.bissecao(funcao_str, [a, b], erro_max)
+
+        x = np.linspace(a, b, 200)
+        y = [methods.calcular_resultado_da_funcao(funcao_str, xi) for xi in x]
+
+        plt.plot(x, y)
+        plt.scatter([raiz], [0], label=f"|e| ≤ {erro}")
+
+        plt.annotate(
+        f"x0 ≈ {raiz:.4f}",
+        (raiz, 0),
+        xytext=(10, 10),
+        textcoords="offset points"
+        )
+
+        plt.axhline(0)
+
+        plt.title("Raiz aproximada encontrada")
+        plt.xlabel("x")
+        plt.ylabel("f(x)")
+
+        plt.show()        
         
     except ValueError:
         messagebox.showwarning("Campos Vazios", "Por favor, preencha todos os campos com números válidos para calcular.")
