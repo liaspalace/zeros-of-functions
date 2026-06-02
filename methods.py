@@ -41,27 +41,27 @@ def bissecao(funcao: str, intervalo: list[float], erro_maximo: float):
 
         print("\n")
         print(f"Consideremos os intervalos:")
-        print(f"[{a:.4f}; {ponto_medio:.4f}] e [{ponto_medio:.4f}; {b:.4f}]")
-        print(f"f({a:.4f}) ≈ {fa:.4f} ({calcular_sinal(fa)})")
-        print(f"f({ponto_medio:.4f}) ≈ {fm:.4f} ({calcular_sinal(fm)})")
-        print(f"f({b:.4f}) ≈ {fb:.4f} ({calcular_sinal(fb)})")
+        print(f"[{a:.6f}; {ponto_medio:.6f}] e [{ponto_medio:.6f}; {b:.6f}]")
+        print(f"f({a:.6f}) ≈ {fa:.6f} ({calcular_sinal(fa)})")
+        print(f"f({ponto_medio:.6f}) ≈ {fm:.6f} ({calcular_sinal(fm)})")
+        print(f"f({b:.6f}) ≈ {fb:.6f} ({calcular_sinal(fb)})")
 
         if fa * fm < 0:
-            print(f"Logo, x0 ∈ [{a:.4f}; {ponto_medio:.4f}]")
+            print(f"Logo, x0 ∈ [{a:.6f}; {ponto_medio:.6f}]")
             intervalo[1] = ponto_medio
             
         else:
-            print(f"Logo, x0 ∈ [{ponto_medio:.4f}; {b:.4f}]")
+            print(f"Logo, x0 ∈ [{ponto_medio:.6f}; {b:.6f}]")
             intervalo[0] = ponto_medio
 
         estimativa = calcular_ponto_medio(intervalo)
 
         print("Assim, uma nova estimativa é:")
-        print(f"x0 ≈ {estimativa:.4f}")
-        print(f"|e| <= {calcular_erro(intervalo):.4f}")
+        print(f"x0 ≈ {estimativa:.6f}")
+        print(f"|e| <= {calcular_erro(intervalo):.6f}")
 
     print("\nErro máximo atingido.")
-    print(f"x0 ≈ {calcular_ponto_medio(intervalo):.4f}")
-    print(f"|e| <= {calcular_erro(intervalo):.4f}")
+    print(f"x0 ≈ {calcular_ponto_medio(intervalo):.6f}")
+    print(f"|e| <= {calcular_erro(intervalo):.6f}")
     
     return calcular_ponto_medio(intervalo), calcular_erro(intervalo)
